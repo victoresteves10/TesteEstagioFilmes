@@ -1,5 +1,9 @@
-const parseDinheiro = require('./parseDinheiro')
-const formatarDinheiro = require('./formatarDinheiro')
+
+const parseDinheiro = require('../utils/parseDinheiro.js')
+const formatarDinheiro = require('../utils/formatarDinheiro.js')
+const { buscarFilmesExternos } = require('../services/filmesServices.js')
+
+
 
 function parseFilme(filme) {
   const lucro = parseDinheiro(filme.bilheteria) - parseDinheiro(filme.orcamento)
@@ -13,20 +17,20 @@ function parseFilme(filme) {
 
   const notaIMDB = Array.isArray(filme.ratings)
     ? (() => {
-        const imdb = filme.ratings.find(r => r.fonte?.toLowerCase() === 'imdb')
-        return imdb ? String(imdb.valor) : 'Não possui avaliação'
-      })()
+      const imdb = filme.ratings.find(r => r.fonte?.toLowerCase() === 'imdb')
+      return imdb ? String(imdb.valor) : 'Não possui avaliação'
+    })()
     : 'Não possui avaliação'
 
   const sinopse = Array.isArray(filme.sinopse) && filme.sinopse.length > 0
     ? (() => {
-        const escolhida =
-          filme.sinopse.find(s => s.idioma === 'pt-br') ||
-          filme.sinopse.find(s => s.idioma === 'en') ||
-          filme.sinopse[0]
+      const escolhida =
+        filme.sinopse.find(s => s.idioma === 'pt-br') ||
+        filme.sinopse.find(s => s.idioma === 'en') ||
+        filme.sinopse[0]
 
-        return escolhida?.texto ? String(escolhida.texto) : 'Sinopse não disponível'
-      })()
+      return escolhida?.texto ? String(escolhida.texto) : 'Sinopse não disponível'
+    })()
     : 'Sinopse não disponível'
 
   return {
@@ -42,4 +46,9 @@ function parseFilme(filme) {
   }
 }
 
-module.exports = parseFilme
+async function transformarFilmes() {
+  const filmes = await buscarFilmesExternos()
+  return filmes.map(parseFilme)
+}
+
+module.exports = { transformarFilmes }

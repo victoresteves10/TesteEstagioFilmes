@@ -1,8 +1,8 @@
-const { buscarFilmesExternos } = require('../services/filmesServices')
+const {transformarFilmes} = require('../services/parseService.js')
 
 async function buscarFilmes(request, reply) {
   try {
-    const filmes = await buscarFilmesExternos()
+    const filmes = await transformarFilmes()
     reply.send({
       total: filmes.length,
       filmes
