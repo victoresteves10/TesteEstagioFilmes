@@ -54,12 +54,13 @@ API que consome dados de uma API externa de filmes, trata essas informações e 
 ### 3. Criação da rota `/filmes`
 - Definida em `routes/filmes.js`
 - Conectada ao controlador em `controllers/filmesController.js`
-### 4. Lógica de processamento (dentro de `filmesController.js`)
+### 4. Lógica de processamento (dentro de `filmesServices.js`)
  #### 4.1 - Fetch da API externa
 - Usado o método `fetch` com `async/await` para esperar a resposta da API extermna  
 - Tratado com `try/catch`
  #### 4.2 - Processamento com `.map`
- Cada objeto de filme foi tratado para gerar um novo formato com:
+### 5. Parse dos dados (dentro de `utils/parseFilme.js`)
+ Cada objeto de filme foi tratado para gerar um novo formato como:
  ##### a) **Premiação mais relevante**
  - Tratamento dos dados referente a premição mais relevante, comparando a relevância de cada premiação e retornando apenas o nome da de maior valor
  ##### b) **Conversão da duração**
@@ -68,7 +69,7 @@ API que consome dados de uma API externa de filmes, trata essas informações e 
  - Buscado dentro do array `ratings` por imdb
  - Retornado como string se encontrado apenas o valor da nota
  ##### d) **Sinopse**
- - Procurado `pt-br`, depois `en`, depois qual estiver disponível
+ - Procurado primeiro por `pt-br`, depois `en`, depois qual estiver disponível
  ##### e) **Cálculo do lucro**
  API externa envia uma string com o valor em dólares, por isso foi necessário converter para número:
  - Criada a função `parseDinheiro()` em `utils/parseDinheiro.js`:
