@@ -54,12 +54,10 @@ API que consome dados de uma API externa de filmes, trata essas informações e 
 ### 3. Criação da rota `/filmes`
 - Definida em `routes/filmes.js`
 - Conectada ao controlador em `controllers/filmesController.js`
-### 4. Lógica de processamento (dentro de `filmesServices.js`)
- #### 4.1 - Fetch da API externa
+### 4. Fetch da API externa (dentro de `filmesServices.js`)
 - Usado o método `fetch` com `async/await` para esperar a resposta da API extermna  
 - Tratado com `try/catch`
- #### 4.2 - Processamento com `.map`
-### 5. Parse dos dados (dentro de `utils/parseFilme.js`)
+### 5. Parse dos dados (dentro de `services/parseService.js`)
  Cada objeto de filme foi tratado para gerar um novo formato como:
  ##### a) **Premiação mais relevante**
  - Tratamento dos dados referente a premição mais relevante, comparando a relevância de cada premiação e retornando apenas o nome da de maior valor
