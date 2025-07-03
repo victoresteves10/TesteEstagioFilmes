@@ -17,7 +17,7 @@ async function buscarFilmes(request, reply) {
         premio = String(maisRelevante.nome)
       }
 
-      const duracaoSegundos = String(filme.duracao * 60)
+      const duracaoSegundos = filme.duracao * 60
 
       let notaIMDB = 'Não possui avaliação'
       if (Array.isArray(filme.ratings)) {
